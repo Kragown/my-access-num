@@ -1,11 +1,10 @@
-import { DesktopMockup } from '@/components/Dashboard/DesktopMockup'
-import { MobileMockup } from '@/components/Dashboard/MobileMockup'
+import { DashboardMockup } from '@/components/Dashboard/DashboardMockup'
 import React from 'react'
 import Link from 'next/link'
 
 function Dashboard() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4 md:p-8">
       <nav aria-label="Navigation de retour">
         <Link
           href="/"
@@ -19,25 +18,13 @@ function Dashboard() {
       </nav>
 
       <main className="max-w-[1800px] mx-auto">
-        <header className="mb-8 text-center">
-          <h1 className="text-slate-800 mb-2">{`Dashboard – Gestion d'événements`}</h1>
-          <p className="text-slate-500">Dashboard accessible</p>
+        <header className="mb-6 md:mb-8 text-center">
+          <h1 className="text-slate-800 mb-2 text-xl md:text-2xl">{`Dashboard – Gestion d'événements`}</h1>
+          <p className="text-slate-500 text-sm md:text-base">Dashboard accessible et responsive</p>
         </header>
         
-        <div className="flex gap-8 items-start justify-center flex-wrap">
-          <section aria-label="Version desktop" className="flex flex-col items-center">
-            <h2 className="mb-3 text-slate-600 text-lg">Desktop (1440×900)</h2>
-            <div className="shadow-2xl rounded-lg overflow-hidden bg-white">
-              <DesktopMockup />
-            </div>
-          </section>
-
-          <section aria-label="Version mobile" className="flex flex-col items-center">
-            <h2 className="mb-3 text-slate-600 text-lg">Mobile (375×812)</h2>
-            <div className="shadow-2xl rounded-2xl overflow-hidden bg-white">
-              <MobileMockup />
-            </div>
-          </section>
+        <div className="shadow-2xl rounded-lg md:rounded-2xl overflow-hidden bg-white">
+          <DashboardMockup />
         </div>
       </main>
     </div>

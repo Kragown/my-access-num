@@ -385,3 +385,59 @@ Pour vérifier l'accessibilité :
 - Aucune dépendance supplémentaire n'a été ajoutée
 - Les styles visuels restent identiques (seulement amélioration des contrastes)
 - Compatible avec tous les navigateurs modernes
+
+## Composants Responsive
+
+### Composant Dashboard Responsive
+
+Un nouveau composant unifié `DashboardMockup.tsx` a été créé pour remplacer les composants séparés `DesktopMockup.tsx` et `MobileMockup.tsx`. Ce composant utilise les classes Tailwind CSS responsive pour s'adapter automatiquement à différentes tailles d'écran :
+
+- **Mobile (< 768px)** : Layout vertical avec menu hamburger, liste d'événements en une colonne, modale en bottom-sheet
+- **Tablette (≥ 768px)** : Layout avec sidebar navigation, grille 2 colonnes
+- **Desktop (≥ 1024px)** : Layout complet avec sidebar, grille 3 colonnes, modale centrée
+
+### Composant Landing Page Responsive
+
+Un nouveau composant unifié `LandingPage.tsx` a été créé pour remplacer les composants séparés `DesktopLanding.tsx` et `MobileLanding.tsx`. Ce composant s'adapte automatiquement à différentes tailles d'écran :
+
+- **Mobile (< 768px)** : 
+  - Menu hamburger visible
+  - Header de 60px
+  - Hero section avec texte réduit
+  - Carrousel horizontal avec scroll
+  - Formulaire compact
+  - Footer centré avec séparateurs visuels
+  
+- **Desktop (≥ 768px)** : 
+  - Navigation horizontale visible
+  - Header de 70px
+  - Hero section avec texte large
+  - Carrousel en grille avec boutons de navigation
+  - Formulaire avec espacements généreux
+  - Footer avec layout horizontal
+
+### Breakpoints utilisés
+
+- `md:` : À partir de 768px (tablettes et plus)
+- `lg:` : À partir de 1024px (desktop)
+
+### Caractéristiques responsive communes
+
+**Dashboard :**
+- Header : Hauteur adaptative (60px mobile, 70px desktop)
+- Navigation : Sidebar visible uniquement sur desktop, menu hamburger sur mobile
+- Grille d'événements : 1 colonne (mobile) → 2 colonnes (tablette) → 3 colonnes (desktop)
+- Modale : Bottom-sheet sur mobile, modale centrée sur desktop
+- Tailles de texte et espacements : Adaptés selon la taille d'écran
+- Bouton flottant : Taille adaptative (12×12 mobile, 14×14 desktop)
+
+**Landing Page :**
+- Header : Hauteur adaptative (60px mobile, 70px desktop)
+- Navigation : Menu hamburger sur mobile, navigation horizontale sur desktop
+- Hero section : Texte et espacements adaptatifs
+- Carrousel : Scroll horizontal sur mobile, grille avec navigation sur desktop
+- Formulaire : Tailles de champs adaptatives (h-10 mobile, h-12 desktop)
+- Footer : Layout vertical sur mobile, horizontal sur desktop
+- Icônes sociales : Taille adaptative (7×7 mobile, 8×8 desktop)
+
+Toutes les améliorations d'accessibilité sont préservées dans les composants responsive.
