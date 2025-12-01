@@ -25,104 +25,134 @@ const events = [
 export function DesktopMockup() {
   return (
     <div className="relative w-[1440px] h-[900px] bg-[#FAFAFA] overflow-hidden">
-      {/* Header */}
-      <div className="absolute top-0 left-0 right-0 h-[70px] bg-white shadow-sm flex items-center px-6 gap-6">
-       
-        <div className="w-10 h-10 rounded-lg bg-[#D5D5D5]"></div>
+      <header className="absolute top-0 left-0 right-0 h-[70px] bg-white shadow-sm flex items-center px-6 gap-6">
+        <div className="w-10 h-10 rounded-lg bg-[#D5D5D5]" aria-hidden="true"></div>
         
-       
         <div className="flex-1 max-w-md relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <label htmlFor="search-desktop" className="sr-only">Rechercher</label>
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" aria-hidden="true" />
           <input 
-            type="text" 
+            id="search-desktop"
+            type="search" 
             placeholder="Rechercher…"
-            className="w-full h-10 pl-10 pr-4 bg-slate-50 rounded-lg border border-slate-200"
+            className="w-full h-10 pl-10 pr-4 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            aria-label="Rechercher des événements"
           />
         </div>
-      </div>
+      </header>
 
       
-      <div className="absolute top-[70px] left-0 bottom-0 w-[70px] bg-[#F5F5F5] border-r border-slate-200">
+      <nav aria-label="Navigation principale" className="absolute top-[70px] left-0 bottom-0 w-[70px] bg-[#F5F5F5] border-r border-slate-200">
         <div className="flex flex-col gap-2 p-3 pt-6">
-          <div className="w-11 h-11 flex items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-white cursor-pointer hover:shadow-md transition-shadow">
-            <Home className="w-5 h-5" />
-          </div>
-          <div className="w-11 h-11 flex items-center justify-center rounded-lg text-slate-400 hover:bg-white cursor-pointer transition-colors">
-            <Calendar className="w-5 h-5" />
-          </div>
-          <div className="w-11 h-11 flex items-center justify-center rounded-lg text-slate-400 hover:bg-white cursor-pointer transition-colors">
-            <BarChart3 className="w-5 h-5" />
-          </div>
-          <div className="w-11 h-11 flex items-center justify-center rounded-lg text-slate-400 hover:bg-white cursor-pointer transition-colors">
-            <Settings className="w-5 h-5" />
-          </div>
+          <button
+            type="button"
+            aria-label="Accueil"
+            aria-current="page"
+            className="w-11 h-11 flex items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-white hover:shadow-md transition-shadow focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+          >
+            <Home className="w-5 h-5" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            aria-label="Calendrier"
+            className="w-11 h-11 flex items-center justify-center rounded-lg text-slate-600 hover:bg-white cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+          >
+            <Calendar className="w-5 h-5" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            aria-label="Statistiques"
+            className="w-11 h-11 flex items-center justify-center rounded-lg text-slate-600 hover:bg-white cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+          >
+            <BarChart3 className="w-5 h-5" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            aria-label="Paramètres"
+            className="w-11 h-11 flex items-center justify-center rounded-lg text-slate-600 hover:bg-white cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+          >
+            <Settings className="w-5 h-5" aria-hidden="true" />
+          </button>
         </div>
-      </div>
+      </nav>
 
-      {/* Main Content */}
-      <div className="absolute top-[70px] left-[70px] right-0 bottom-0 p-8 overflow-auto">
-       
-        <h3 className="mb-6">Mes évènements</h3>
+      <main className="absolute top-[70px] left-[70px] right-0 bottom-0 p-8 overflow-auto">
+        <h1 className="mb-6 text-2xl font-bold text-slate-800">Mes évènements</h1>
 
-        {/* Event Cards Grid */}
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-6" role="list">
           {events.map((event) => (
-            <div key={event.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-            
+            <article key={event.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden" role="listitem">
               <img 
                 src={event.image} 
-                alt="" 
+                alt={`Image pour ${event.title}`}
                 className="w-full h-48 object-cover"
               />
               <div className="p-5">
-               
-                <p className="mb-2">{event.title}</p>
-              
-                <p className="text-[#C8C8C8] mb-4">{event.date}</p>
+                <h2 className="mb-2 text-lg font-semibold text-slate-800">{event.title}</h2>
+                <p className="text-slate-600 mb-4">{event.date}</p>
                 
-                <div className="inline-block px-5 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg cursor-pointer hover:shadow-md transition-shadow">
+                <button className="inline-block px-5 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:shadow-md transition-shadow focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
                   Voir
-                </div>
+                </button>
               </div>
-            </div>
+            </article>
           ))}
         </div>
-      </div>
+      </main>
 
      
-      <div className="absolute bottom-8 right-8 w-14 h-14 rounded-full bg-gradient-to-br from-pink-500 to-pink-600 shadow-lg hover:shadow-xl transition-shadow cursor-pointer flex items-center justify-center text-white">
-        <Plus className="w-6 h-6" />
-      </div>
+      <button
+        type="button"
+        aria-label="Ajouter un événement"
+        className="absolute bottom-8 right-8 w-14 h-14 rounded-full bg-gradient-to-br from-pink-500 to-pink-600 shadow-lg hover:shadow-xl transition-shadow flex items-center justify-center text-white focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+      >
+        <Plus className="w-6 h-6" aria-hidden="true" />
+      </button>
 
      
-      <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+      <div className="absolute inset-0 bg-black/20 flex items-center justify-center" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div className="bg-white rounded-2xl shadow-2xl w-[480px] p-8 relative">
+          <h2 id="modal-title" className="mb-6 text-xl font-bold text-slate-800">Ajouter un évènement</h2>
           
-          <div className="mb-6">Ajouter un évènement</div>
-          
-         
-          <div className="absolute top-6 right-6 w-6 h-6 flex items-center justify-center text-[#D5D5D5] cursor-pointer">
-            <X className="w-4 h-4" />
-          </div>
+          <button
+            type="button"
+            aria-label="Fermer la modale"
+            className="absolute top-6 right-6 w-6 h-6 flex items-center justify-center text-slate-400 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded"
+          >
+            <X className="w-4 h-4" aria-hidden="true" />
+          </button>
 
-         
-          <div className="space-y-4 mb-6">
-            <input 
-              type="text"
-              placeholder="Nom de l'évènement"
-              className="w-full h-12 px-4 bg-slate-50 rounded-lg border border-slate-200"
-            />
-            <input 
-              type="text"
-              placeholder="JJ/MM/AAAA"
-              className="w-full h-12 px-4 bg-slate-50 rounded-lg border border-slate-200"
-            />
-          </div>
+          <form className="space-y-4 mb-6" aria-label="Formulaire d'ajout d'événement">
+            <div>
+              <label htmlFor="event-name" className="sr-only">Nom de l'évènement</label>
+              <input 
+                id="event-name"
+                type="text"
+                placeholder="Nom de l'évènement"
+                required
+                className="w-full h-12 px-4 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                aria-required="true"
+              />
+            </div>
+            <div>
+              <label htmlFor="event-date" className="sr-only">Date de l'évènement</label>
+              <input 
+                id="event-date"
+                type="date"
+                placeholder="JJ/MM/AAAA"
+                required
+                className="w-full h-12 px-4 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                aria-required="true"
+              />
+            </div>
+          </form>
 
-          
-          <div className="w-full h-12 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg cursor-pointer hover:shadow-md transition-shadow flex items-center justify-center">
+          <button
+            type="submit"
+            className="w-full h-12 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:shadow-md transition-shadow flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+          >
             Créer
-          </div>
+          </button>
         </div>
       </div>
     </div>

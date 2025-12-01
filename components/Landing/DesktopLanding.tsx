@@ -47,18 +47,18 @@ export function DesktopLanding() {
     <div className="w-[1440px] h-[900px] bg-white overflow-auto">
       <header className="sticky top-0 z-50 bg-white shadow-sm h-[70px] flex items-center justify-between px-12">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-[#D5D5D5]"></div>
-          <span className="text-[#D5D5D5]">Logo</span>
+          <div className="w-10 h-10 rounded-lg bg-[#D5D5D5]" aria-hidden="true"></div>
+          <span className="text-slate-700 font-semibold">Logo</span>
         </div>
 
-        <nav className="flex gap-8">
-          <div className="text-[#ABABAB] text-sm cursor-pointer">Accueil</div>
-          <div className="text-[#ABABAB] text-sm cursor-pointer">Fonctionnalités</div>
-          <div className="text-[#ABABAB] text-sm cursor-pointer">Contact</div>
+        <nav aria-label="Navigation principale" className="flex gap-8">
+          <a href="#accueil" className="text-slate-700 text-sm hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-2 py-1">Accueil</a>
+          <a href="#fonctionnalites" className="text-slate-700 text-sm hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-2 py-1">Fonctionnalités</a>
+          <a href="#contact" className="text-slate-700 text-sm hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-2 py-1">Contact</a>
         </nav>
       </header>
 
-      <section className="relative h-[500px] bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center overflow-hidden">
+      <section id="accueil" className="relative h-[500px] bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 opacity-20"
           style={{
@@ -66,134 +66,195 @@ export function DesktopLanding() {
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}
+          aria-hidden="true"
         ></div>
 
         <div className="relative z-10 text-center max-w-3xl px-8">
-          <h4 className="mb-4">Transformez votre façon de travailler</h4>
+          <h1 className="mb-4 text-4xl font-bold text-slate-800">Transformez votre façon de travailler</h1>
           
-          <p className="text-[#C8C8C8] mb-8 text-lg">
+          <p className="text-slate-600 mb-8 text-lg">
             Découvrez une plateforme innovante qui révolutionne la gestion de vos projets et optimise votre productivité
           </p>
 
           <div className="flex gap-4 justify-center items-center">
-            <div className="px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full cursor-pointer hover:shadow-lg transition-shadow">
+            <button className="px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
               Commencer
-            </div>
-            <div className="text-[#D0D0D0] cursor-pointer text-sm underline">
+            </button>
+            <a href="#fonctionnalites" className="text-slate-700 hover:text-slate-900 text-sm underline focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-2 py-1">
               En savoir plus
-            </div>
+            </a>
           </div>
         </div>
       </section>
 
-      <section className="py-16 px-12 bg-white">
-        <h2 className="text-center mb-12 text-slate-800">Nos fonctionnalités</h2>
+      <section id="fonctionnalites" className="py-16 px-12 bg-white">
+        <h2 className="text-center mb-12 text-slate-800 text-3xl font-bold">Nos fonctionnalités</h2>
 
         <div className="relative max-w-6xl mx-auto">
-          <div className="overflow-hidden">
+          <div className="overflow-hidden" aria-live="polite" aria-atomic="true">
             <div 
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentSlide * 25}%)` }}
+              role="list"
             >
               {carouselItems.map((item) => (
-                <div key={item.id} className="min-w-[25%] px-3">
+                <article key={item.id} className="min-w-[25%] px-3" role="listitem">
                   <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                     <img 
                       src={item.image} 
-                      alt=""
+                      alt={item.title}
                       className="w-full h-48 object-cover"
                     />
                     <div className="p-5">
-                      <p className="mb-2">{item.title}</p>
-                      <p className="text-[#C8C8C8] text-sm">{item.description}</p>
+                      <h3 className="mb-2 text-lg font-semibold text-slate-800">{item.title}</h3>
+                      <p className="text-slate-600 text-sm">{item.description}</p>
                     </div>
                   </div>
-                </div>
+                </article>
               ))}
             </div>
           </div>
 
-          <div 
-            className="absolute left-0 top-1/2 -translate-y-1/2 -ml-5 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center cursor-pointer"
+          <button
+            type="button"
+            aria-label="Slide précédent"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -ml-5 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
             onClick={() => scrollToSlide((currentSlide - 1 + carouselItems.length) % carouselItems.length)}
           >
-            <ChevronLeft className="w-4 h-4 text-slate-400" />
-          </div>
-          <div 
-            className="absolute right-0 top-1/2 -translate-y-1/2 -mr-5 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center cursor-pointer"
+            <ChevronLeft className="w-4 h-4 text-slate-600" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            aria-label="Slide suivant"
+            className="absolute right-0 top-1/2 -translate-y-1/2 -mr-5 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
             onClick={() => scrollToSlide((currentSlide + 1) % carouselItems.length)}
           >
-            <ChevronRight className="w-4 h-4 text-slate-400" />
-          </div>
+            <ChevronRight className="w-4 h-4 text-slate-600" aria-hidden="true" />
+          </button>
 
-          <div className="flex justify-center gap-2 mt-6">
+          <div className="flex justify-center gap-2 mt-6" role="tablist" aria-label="Indicateurs de slides">
             {carouselItems.map((_, index) => (
-              <div
+              <button
                 key={index}
-                className={`w-2 h-2 rounded-full cursor-pointer transition-colors ${
+                type="button"
+                role="tab"
+                aria-label={`Aller au slide ${index + 1}`}
+                aria-selected={currentSlide === index}
+                className={`w-2 h-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
                   currentSlide === index ? 'bg-purple-500' : 'bg-slate-300'
                 }`}
                 onClick={() => scrollToSlide(index)}
-              ></div>
+              ></button>
             ))}
+          </div>
+          <div className="sr-only" aria-live="polite" aria-atomic="true">
+            Slide {currentSlide + 1} sur {carouselItems.length}
           </div>
         </div>
       </section>
 
-      <section className="py-16 px-12 bg-gradient-to-br from-slate-50 to-slate-100">
+      <section id="contact" className="py-16 px-12 bg-gradient-to-br from-slate-50 to-slate-100">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-center mb-10 text-slate-800">Contactez-nous</h2>
+          <h2 className="text-center mb-10 text-slate-800 text-3xl font-bold">Contactez-nous</h2>
 
-          <div className="bg-white rounded-2xl shadow-lg p-8">
+          <form className="bg-white rounded-2xl shadow-lg p-8" aria-label="Formulaire de contact">
             <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="Nom"
-                className="w-full h-12 px-4 bg-slate-50 rounded-lg border border-slate-200"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                className="w-full h-12 px-4 bg-slate-50 rounded-lg border border-slate-200"
-              />
-              <textarea
-                placeholder="Message"
-                rows={4}
-                className="w-full px-4 py-3 bg-slate-50 rounded-lg border border-slate-200 resize-none"
-              ></textarea>
-              <div className="w-full h-12 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg cursor-pointer hover:shadow-md transition-shadow flex items-center justify-center">
-                Envoyer
+              <div>
+                <label htmlFor="nom" className="sr-only">Nom</label>
+                <input
+                  id="nom"
+                  name="nom"
+                  type="text"
+                  placeholder="Nom"
+                  required
+                  className="w-full h-12 px-4 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  aria-required="true"
+                />
               </div>
+              <div>
+                <label htmlFor="email" className="sr-only">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  required
+                  className="w-full h-12 px-4 bg-slate-50 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  aria-required="true"
+                />
+              </div>
+              <div>
+                <label htmlFor="message" className="sr-only">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="Message"
+                  rows={4}
+                  required
+                  className="w-full px-4 py-3 bg-slate-50 rounded-lg border border-slate-200 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  aria-required="true"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="w-full h-12 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:shadow-md transition-shadow focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+              >
+                Envoyer
+              </button>
             </div>
-          </div>
+          </form>
         </div>
       </section>
 
       <footer className="bg-white border-t border-slate-100 py-8 px-12">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-6">
-            <p className="text-[#D0D0D0] text-sm">© 2025 Entreprise. Tous droits réservés.</p>
-            <div className="flex gap-3">
-              <span className="text-[#D0D0D0] text-xs cursor-pointer">Confidentialité</span>
-              <span className="text-[#D0D0D0] text-xs cursor-pointer">Conditions</span>
-              <span className="text-[#D0D0D0] text-xs cursor-pointer">Cookies</span>
-            </div>
+            <p className="text-slate-600 text-sm">© 2025 Entreprise. Tous droits réservés.</p>
+            <nav aria-label="Liens légaux" className="flex gap-3">
+              <a href="#confidentialite" className="text-slate-600 text-xs hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-2 py-1">Confidentialité</a>
+              <a href="#conditions" className="text-slate-600 text-xs hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-2 py-1">Conditions</a>
+              <a href="#cookies" className="text-slate-600 text-xs hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-2 py-1">Cookies</a>
+            </nav>
           </div>
 
-          <div className="flex justify-center gap-4">
-            <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center cursor-pointer">
-              <Facebook className="w-4 h-4 text-slate-400" />
-            </div>
-            <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center cursor-pointer">
-              <Twitter className="w-4 h-4 text-slate-400" />
-            </div>
-            <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center cursor-pointer">
-              <Instagram className="w-4 h-4 text-slate-400" />
-            </div>
-            <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center cursor-pointer">
-              <Linkedin className="w-4 h-4 text-slate-400" />
-            </div>
-          </div>
+          <nav aria-label="Réseaux sociaux" className="flex justify-center gap-4">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+            >
+              <Facebook className="w-4 h-4 text-slate-600" aria-hidden="true" />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+            >
+              <Twitter className="w-4 h-4 text-slate-600" aria-hidden="true" />
+            </a>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+            >
+              <Instagram className="w-4 h-4 text-slate-600" aria-hidden="true" />
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+            >
+              <Linkedin className="w-4 h-4 text-slate-600" aria-hidden="true" />
+            </a>
+          </nav>
         </div>
       </footer>
     </div>
