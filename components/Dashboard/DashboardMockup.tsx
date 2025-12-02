@@ -1,6 +1,6 @@
 "use client"
 import { Home, Calendar, BarChart3, Settings, Search, Plus, X, Menu, ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 const events = [
@@ -26,6 +26,26 @@ const events = [
 
 export function DashboardMockup() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const firstInputRef = useRef<HTMLInputElement>(null);
+
+  // Focus trap pour la modale
+  useEffect(() => {
+    if (isModalOpen && firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, [isModalOpen]);
+
+  // Gestion de la fermeture avec Escape
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        setIsModalOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isModalOpen]);
 
   return (
     <div className="relative w-full min-h-screen md:h-[900px] bg-[#FAFAFA] overflow-hidden">
@@ -152,10 +172,16 @@ export function DashboardMockup() {
       {/* Modal - Responsive */}
       {isModalOpen && (
         <div 
+          ref={modalRef}
           className="absolute inset-0 bg-black/20 md:bg-black/20 flex items-end md:items-center justify-center z-50" 
           role="dialog" 
           aria-modal="true" 
           aria-labelledby="modal-title-dashboard"
+          onClick={(e) => {
+            if (e.target === modalRef.current) {
+              setIsModalOpen(false);
+            }
+          }}
         >
         {/* Mobile: bottom sheet style, Desktop: centered modal */}
         <div className="bg-white rounded-t-3xl md:rounded-2xl shadow-2xl w-full md:w-[480px] p-6 md:p-8 pb-8 md:pb-8 relative max-h-[90vh] md:max-h-none overflow-y-auto">
@@ -174,22 +200,25 @@ export function DashboardMockup() {
 
           <form className="space-y-3 md:space-y-4 mt-5 md:mt-0 mb-5 md:mb-6" aria-label="Formulaire d'ajout d'événement">
             <div>
-              <label htmlFor="event-name-dashboard" className="sr-only">Nom de l'évènement</label>
+              <label htmlFor="event-name-dashboard" className="block text-sm md:text-base font-medium text-slate-700 mb-1.5 md:mb-2">
+                Nom de l'évènement
+              </label>
               <input 
+                ref={firstInputRef}
                 id="event-name-dashboard"
                 type="text"
-                placeholder="Nom de l'évènement"
                 required
                 className="w-full h-11 md:h-12 px-4 bg-slate-50 rounded-lg border border-slate-200 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 aria-required="true"
               />
             </div>
             <div>
-              <label htmlFor="event-date-dashboard" className="sr-only">Date de l'évènement</label>
+              <label htmlFor="event-date-dashboard" className="block text-sm md:text-base font-medium text-slate-700 mb-1.5 md:mb-2">
+                Date de l'évènement
+              </label>
               <input 
                 id="event-date-dashboard"
                 type="date"
-                placeholder="JJ/MM/AAAA"
                 required
                 className="w-full h-11 md:h-12 px-4 bg-slate-50 rounded-lg border border-slate-200 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 aria-required="true"

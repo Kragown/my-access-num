@@ -32,6 +32,7 @@ const carouselItems = [
 
 export default function LandingPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -66,31 +67,54 @@ export default function LandingPage() {
 
         {/* Mobile: Menu button and Dashboard link */}
         <div className="flex items-center gap-2 md:hidden">
-          <Link
-            href="/dashboard"
-            className="px-3 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-xs hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
-          >
-            Dashboard
-          </Link>
           <button
             type="button"
-            aria-label="Ouvrir le menu"
+            aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="w-10 h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded"
           >
             <Menu className="w-5 h-5 text-slate-600" aria-hidden="true" />
           </button>
         </div>
 
+        {/* Mobile Menu - Dropdown */}
+        {isMenuOpen && (
+          <nav 
+            aria-label="Navigation principale mobile" 
+            className="absolute top-[60px] left-0 right-0 bg-white shadow-lg border-t border-slate-200 md:hidden z-40"
+          >
+            <div className="flex flex-col py-2">
+              <a 
+                href="#accueil" 
+                onClick={() => setIsMenuOpen(false)}
+                className="px-4 py-3 text-slate-700 text-sm hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-inset"
+              >
+                Accueil
+              </a>
+              <a 
+                href="#fonctionnalites" 
+                onClick={() => setIsMenuOpen(false)}
+                className="px-4 py-3 text-slate-700 text-sm hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-inset"
+              >
+                Fonctionnalités
+              </a>
+              <a 
+                href="#contact" 
+                onClick={() => setIsMenuOpen(false)}
+                className="px-4 py-3 text-slate-700 text-sm hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-inset"
+              >
+                Contact
+              </a>
+            </div>
+          </nav>
+        )}
+
+        {/* Desktop Navigation */}
         <nav aria-label="Navigation principale" className="hidden md:flex gap-6 lg:gap-8 items-center">
           <a href="#accueil" className="text-slate-700 text-sm hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-2 py-1">Accueil</a>
           <a href="#fonctionnalites" className="text-slate-700 text-sm hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-2 py-1">Fonctionnalités</a>
           <a href="#contact" className="text-slate-700 text-sm hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-2 py-1">Contact</a>
-          <Link
-            href="/dashboard"
-            className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
-          >
-            Dashboard
-          </Link>
         </nav>
       </header>
 
@@ -116,9 +140,12 @@ export default function LandingPage() {
           </p>
 
           <div className="flex flex-col md:flex-row gap-3 md:gap-4 justify-center items-center">
-            <button className="px-6 md:px-8 py-2.5 md:py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm md:text-base hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+            <Link
+              href="/dashboard"
+              className="px-6 md:px-8 py-2.5 md:py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm md:text-base hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+            >
               Commencer
-            </button>
+            </Link>
             <a href="#fonctionnalites" className="text-slate-700 hover:text-slate-900 text-xs md:text-sm underline focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-2 py-1">
               En savoir plus
             </a>
@@ -247,35 +274,38 @@ export default function LandingPage() {
           <form className="bg-white rounded-2xl shadow-lg p-5 md:p-8" aria-label="Formulaire de contact">
             <div className="space-y-3 md:space-y-4">
               <div>
-                <label htmlFor="nom-landing" className="sr-only">Nom</label>
+                <label htmlFor="nom-landing" className="block text-sm md:text-base font-medium text-slate-700 mb-1.5 md:mb-2">
+                  Nom
+                </label>
                 <input
                   id="nom-landing"
                   name="nom"
                   type="text"
-                  placeholder="Nom"
                   required
                   className="w-full h-10 md:h-12 px-3 md:px-4 bg-slate-50 rounded-lg border border-slate-200 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   aria-required="true"
                 />
               </div>
               <div>
-                <label htmlFor="email-landing" className="sr-only">Email</label>
+                <label htmlFor="email-landing" className="block text-sm md:text-base font-medium text-slate-700 mb-1.5 md:mb-2">
+                  Email
+                </label>
                 <input
                   id="email-landing"
                   name="email"
                   type="email"
-                  placeholder="Email"
                   required
                   className="w-full h-10 md:h-12 px-3 md:px-4 bg-slate-50 rounded-lg border border-slate-200 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   aria-required="true"
                 />
               </div>
               <div>
-                <label htmlFor="message-landing" className="sr-only">Message</label>
+                <label htmlFor="message-landing" className="block text-sm md:text-base font-medium text-slate-700 mb-1.5 md:mb-2">
+                  Message
+                </label>
                 <textarea
                   id="message-landing"
                   name="message"
-                  placeholder="Message"
                   rows={3}
                   required
                   className="w-full px-3 md:px-4 py-2 md:py-3 bg-slate-50 rounded-lg border border-slate-200 resize-none text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
