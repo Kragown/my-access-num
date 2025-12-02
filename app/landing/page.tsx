@@ -334,15 +334,15 @@ export default function LandingPage() {
       <footer className="bg-white border-t border-slate-100 py-6 md:py-8 px-5 md:px-12">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center mb-4 md:mb-6 gap-3 md:gap-0">
-            <p className="text-slate-600 text-xs md:text-sm text-center md:text-left">
+            <p className="text-slate-700 text-xs md:text-sm text-center md:text-left">
               © 2025 Entreprise. Tous droits réservés.
             </p>
             <nav aria-label="Liens légaux" className="flex gap-2 md:gap-3 justify-center">
-              <a href="#confidentialite" className="text-slate-600 text-[10px] md:text-xs hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-1 md:px-2 py-1">Confidentialité</a>
-              <span className="text-slate-600 text-[10px] md:text-xs hidden md:inline" aria-hidden="true">•</span>
-              <a href="#conditions" className="text-slate-600 text-[10px] md:text-xs hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-1 md:px-2 py-1">Conditions</a>
-              <span className="text-slate-600 text-[10px] md:text-xs hidden md:inline" aria-hidden="true">•</span>
-              <a href="#cookies" className="text-slate-600 text-[10px] md:text-xs hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-1 md:px-2 py-1">Cookies</a>
+              <a href="#confidentialite" className="text-slate-700 text-xs md:text-sm hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-1 md:px-2 py-1">Confidentialité</a>
+              <span className="text-slate-600 text-xs md:text-sm hidden md:inline" aria-hidden="true">•</span>
+              <a href="#conditions" className="text-slate-700 text-xs md:text-sm hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-1 md:px-2 py-1">Conditions</a>
+              <span className="text-slate-600 text-xs md:text-sm hidden md:inline" aria-hidden="true">•</span>
+              <a href="#cookies" className="text-slate-700 text-xs md:text-sm hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-1 md:px-2 py-1">Cookies</a>
             </nav>
           </div>
 

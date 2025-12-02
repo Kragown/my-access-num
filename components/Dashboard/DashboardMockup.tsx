@@ -50,41 +50,44 @@ export function DashboardMockup() {
   return (
     <div className="relative w-full min-h-screen md:h-[900px] bg-[#FAFAFA] overflow-hidden">
       {/* Header - Responsive */}
-      <header className="absolute top-0 left-0 right-0 h-[60px] md:h-[70px] bg-white shadow-sm flex items-center px-4 md:px-6 gap-3 md:gap-6">
-        {/* Back button - Left side */}
+      <header className="absolute top-0 left-0 right-0 h-[60px] md:h-[70px] bg-white shadow-sm flex items-center justify-between px-4 md:px-6 gap-3 md:gap-6">
+        {/* Left side: Back button */}
         <Link
           href="/landing"
-          aria-label="Retour à la page landing"
-          className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+          className="flex items-center gap-2 px-3 md:px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 text-slate-700 text-sm md:text-base font-medium"
         >
-          <ArrowLeft className="w-5 h-5 text-slate-600" aria-hidden="true" />
+          <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 text-slate-600" aria-hidden="true" />
+          <span>Retour Accueil</span>
         </Link>
 
-        {/* Menu button - Mobile only */}
-        <button
-          type="button"
-          aria-label="Ouvrir le menu de navigation"
-          aria-expanded="false"
-          aria-controls="dashboard-sidebar"
-          className="w-10 h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded md:hidden"
-        >
-          <Menu className="w-5 h-5 text-slate-600" aria-hidden="true" />
-        </button>
+        {/* Right side: Desktop - Logo and Search, Mobile - Menu button */}
+        <div className="flex items-center gap-3 md:gap-6">
+          {/* Logo - Desktop only */}
+          <div className="hidden md:block w-8 h-8 md:w-10 md:h-10 rounded-lg bg-[#D5D5D5]" aria-hidden="true"></div>
+          
+          {/* Search bar - Desktop only */}
+          <div className="hidden md:flex flex-1 max-w-md relative">
+            <label htmlFor="search-dashboard" className="sr-only">Rechercher</label>
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" aria-hidden="true" />
+            <input 
+              id="search-dashboard"
+              type="search" 
+              placeholder="Rechercher…"
+              className="w-full h-9 md:h-10 pl-9 md:pl-10 pr-3 md:pr-4 bg-slate-50 rounded-lg border border-slate-200 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              aria-label="Rechercher des événements"
+            />
+          </div>
 
-        {/* Logo */}
-        <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-[#D5D5D5]" aria-hidden="true"></div>
-        
-        {/* Search bar */}
-        <div className="flex-1 max-w-md relative">
-          <label htmlFor="search-dashboard" className="sr-only">Rechercher</label>
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" aria-hidden="true" />
-          <input 
-            id="search-dashboard"
-            type="search" 
-            placeholder="Rechercher…"
-            className="w-full h-9 md:h-10 pl-9 md:pl-10 pr-3 md:pr-4 bg-slate-50 rounded-lg border border-slate-200 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            aria-label="Rechercher des événements"
-          />
+          {/* Menu button - Mobile only */}
+          <button
+            type="button"
+            aria-label="Ouvrir le menu de navigation"
+            aria-expanded="false"
+            aria-controls="dashboard-sidebar"
+            className="w-10 h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded md:hidden"
+          >
+            <Menu className="w-5 h-5 text-slate-600" aria-hidden="true" />
+          </button>
         </div>
       </header>
 
@@ -194,7 +197,7 @@ export function DashboardMockup() {
             type="button"
             aria-label="Fermer la modale"
             onClick={() => setIsModalOpen(false)}
-            className="absolute top-5 md:top-6 right-5 md:right-6 w-6 h-6 flex items-center justify-center text-slate-400 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded"
+            className="absolute top-5 md:top-6 right-5 md:right-6 w-6 h-6 flex items-center justify-center text-slate-600 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded"
           >
             <X className="w-3.5 h-3.5 md:w-4 md:h-4" aria-hidden="true" />
           </button>
