@@ -31,13 +31,22 @@ const carouselItems = [
 ];
 
 export default function LandingPage() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(carouselItems.length); // Commencer au milieu pour la boucle
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const duplicatedItems = [...carouselItems, ...carouselItems, ...carouselItems];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % carouselItems.length);
+      setCurrentSlide((prev) => {
+        const next = prev + 1;
+        if (next >= carouselItems.length * 2) {
+          return carouselItems.length;
+        }
+        return next;
+      });
     }, 3000);
     return () => clearInterval(interval);
   }, []);
@@ -46,14 +55,51 @@ export default function LandingPage() {
     if (scrollContainerRef.current && window.innerWidth < 768) {
       const scrollWidth = scrollContainerRef.current.scrollWidth / carouselItems.length;
       scrollContainerRef.current.scrollTo({
-        left: scrollWidth * currentSlide,
+        left: scrollWidth * (currentSlide % carouselItems.length),
         behavior: 'smooth'
       });
     }
   }, [currentSlide]);
 
+  useEffect(() => {
+    if (carouselRef.current && window.innerWidth >= 768) {
+      const handleTransitionEnd = () => {
+        if (carouselRef.current) {
+          if (currentSlide >= carouselItems.length * 2) {
+            carouselRef.current.style.transition = 'none';
+            carouselRef.current.style.transform = `translateX(-${carouselItems.length * 25}%)`;
+            setCurrentSlide(carouselItems.length);
+            setTimeout(() => {
+              if (carouselRef.current) {
+                carouselRef.current.style.transition = 'transform 500ms ease-in-out';
+              }
+            }, 50);
+          }
+          else if (currentSlide < carouselItems.length) {
+            carouselRef.current.style.transition = 'none';
+            carouselRef.current.style.transform = `translateX(-${(carouselItems.length * 2 - 1) * 25}%)`;
+            setCurrentSlide(carouselItems.length * 2 - 1);
+            setTimeout(() => {
+              if (carouselRef.current) {
+                carouselRef.current.style.transition = 'transform 500ms ease-in-out';
+              }
+            }, 50);
+          }
+        }
+      };
+
+      carouselRef.current.addEventListener('transitionend', handleTransitionEnd);
+      return () => {
+        if (carouselRef.current) {
+          carouselRef.current.removeEventListener('transitionend', handleTransitionEnd);
+        }
+      };
+    }
+  }, [currentSlide]);
+
   const scrollToSlide = (index: number) => {
-    setCurrentSlide(index);
+    const adjustedIndex = index + carouselItems.length;
+    setCurrentSlide(adjustedIndex);
   };
 
   return (
@@ -209,12 +255,13 @@ export default function LandingPage() {
         <div className="hidden md:block relative max-w-6xl mx-auto">
           <div id="carousel-desktop" className="overflow-hidden" aria-live="polite" aria-atomic="true">
             <div 
+              ref={carouselRef}
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentSlide * 25}%)` }}
               role="list"
             >
-              {carouselItems.map((item) => (
-                <article key={item.id} className="min-w-[25%] px-3" role="listitem">
+              {duplicatedItems.map((item, index) => (
+                <article key={`${item.id}-${index}`} className="min-w-[25%] px-3" role="listitem">
                   <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                     <img 
                       src={item.image} 
@@ -236,7 +283,7 @@ export default function LandingPage() {
             aria-label="Slide précédent"
             aria-controls="carousel-desktop"
             className="absolute left-0 top-1/2 -translate-y-1/2 -ml-5 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
-            onClick={() => scrollToSlide((currentSlide - 1 + carouselItems.length) % carouselItems.length)}
+            onClick={() => setCurrentSlide((prev) => prev - 1)}
           >
             <ChevronLeft className="w-4 h-4 text-slate-600" aria-hidden="true" />
           </button>
@@ -245,26 +292,29 @@ export default function LandingPage() {
             aria-label="Slide suivant"
             aria-controls="carousel-desktop"
             className="absolute right-0 top-1/2 -translate-y-1/2 -mr-5 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
-            onClick={() => scrollToSlide((currentSlide + 1) % carouselItems.length)}
+            onClick={() => setCurrentSlide((prev) => prev + 1)}
           >
             <ChevronRight className="w-4 h-4 text-slate-600" aria-hidden="true" />
           </button>
 
           <div className="flex justify-center gap-2 mt-6" role="tablist" aria-label="Indicateurs de slides">
-            {carouselItems.map((_, index) => (
-              <button
-                key={index}
-                type="button"
-                role="tab"
-                aria-label={`Aller au slide ${index + 1}`}
-                aria-selected={currentSlide === index}
-                aria-controls="carousel-desktop"
-                className={`w-2 h-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
-                  currentSlide === index ? 'bg-purple-500' : 'bg-slate-300'
-                }`}
-                onClick={() => scrollToSlide(index)}
-              ></button>
-            ))}
+            {carouselItems.map((_, index) => {
+              const displayIndex = currentSlide % carouselItems.length;
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  role="tab"
+                  aria-label={`Aller au slide ${index + 1}`}
+                  aria-selected={displayIndex === index}
+                  aria-controls="carousel-desktop"
+                  className={`w-2 h-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
+                    displayIndex === index ? 'bg-purple-500' : 'bg-slate-300'
+                  }`}
+                  onClick={() => scrollToSlide(index)}
+                ></button>
+              );
+            })}
           </div>
         </div>
 

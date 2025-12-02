@@ -29,14 +29,12 @@ export function DashboardMockup() {
   const modalRef = useRef<HTMLDivElement>(null);
   const firstInputRef = useRef<HTMLInputElement>(null);
 
-  // Focus trap pour la modale
   useEffect(() => {
     if (isModalOpen && firstInputRef.current) {
       firstInputRef.current.focus();
     }
   }, [isModalOpen]);
 
-  // Gestion de la fermeture avec Escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isModalOpen) {
