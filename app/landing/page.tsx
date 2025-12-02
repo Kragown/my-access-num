@@ -71,6 +71,7 @@ export default function LandingPage() {
             type="button"
             aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation-menu"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="w-10 h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded"
           >
@@ -81,6 +82,7 @@ export default function LandingPage() {
         {/* Mobile Menu - Dropdown */}
         {isMenuOpen && (
           <nav 
+            id="mobile-navigation-menu"
             aria-label="Navigation principale mobile" 
             className="absolute top-[60px] left-0 right-0 bg-white shadow-lg border-t border-slate-200 md:hidden z-40"
           >
@@ -140,12 +142,12 @@ export default function LandingPage() {
           </p>
 
           <div className="flex flex-col md:flex-row gap-3 md:gap-4 justify-center items-center">
-            <Link
+        <Link
               href="/dashboard"
               className="px-6 md:px-8 py-2.5 md:py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm md:text-base hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
             >
               Commencer
-            </Link>
+        </Link>
             <a href="#fonctionnalites" className="text-slate-700 hover:text-slate-900 text-xs md:text-sm underline focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded px-2 py-1">
               En savoir plus
             </a>
@@ -161,6 +163,7 @@ export default function LandingPage() {
         <div className="md:hidden">
           <div 
             ref={scrollContainerRef}
+            id="carousel-mobile"
             className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             role="list"
@@ -182,7 +185,7 @@ export default function LandingPage() {
                 </div>
               </article>
             ))}
-          </div>
+      </div>
 
           <div className="flex justify-center gap-1.5 mt-5" role="tablist" aria-label="Indicateurs de slides">
             {carouselItems.map((_, index) => (
@@ -192,6 +195,7 @@ export default function LandingPage() {
                 role="tab"
                 aria-label={`Aller au slide ${index + 1}`}
                 aria-selected={currentSlide === index}
+                aria-controls="carousel-mobile"
                 className={`w-1.5 h-1.5 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
                   currentSlide === index ? 'bg-purple-500' : 'bg-slate-300'
                 }`}
@@ -200,10 +204,10 @@ export default function LandingPage() {
             ))}
           </div>
         </div>
-
+        
         {/* Desktop: Grid carousel with navigation */}
         <div className="hidden md:block relative max-w-6xl mx-auto">
-          <div className="overflow-hidden" aria-live="polite" aria-atomic="true">
+          <div id="carousel-desktop" className="overflow-hidden" aria-live="polite" aria-atomic="true">
             <div 
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentSlide * 25}%)` }}
@@ -230,6 +234,7 @@ export default function LandingPage() {
           <button
             type="button"
             aria-label="Slide précédent"
+            aria-controls="carousel-desktop"
             className="absolute left-0 top-1/2 -translate-y-1/2 -ml-5 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
             onClick={() => scrollToSlide((currentSlide - 1 + carouselItems.length) % carouselItems.length)}
           >
@@ -238,6 +243,7 @@ export default function LandingPage() {
           <button
             type="button"
             aria-label="Slide suivant"
+            aria-controls="carousel-desktop"
             className="absolute right-0 top-1/2 -translate-y-1/2 -mr-5 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
             onClick={() => scrollToSlide((currentSlide + 1) % carouselItems.length)}
           >
@@ -252,6 +258,7 @@ export default function LandingPage() {
                 role="tab"
                 aria-label={`Aller au slide ${index + 1}`}
                 aria-selected={currentSlide === index}
+                aria-controls="carousel-desktop"
                 className={`w-2 h-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
                   currentSlide === index ? 'bg-purple-500' : 'bg-slate-300'
                 }`}

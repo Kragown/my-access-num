@@ -63,7 +63,9 @@ export function DashboardMockup() {
         {/* Menu button - Mobile only */}
         <button
           type="button"
-          aria-label="Ouvrir le menu"
+          aria-label="Ouvrir le menu de navigation"
+          aria-expanded="false"
+          aria-controls="dashboard-sidebar"
           className="w-10 h-10 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 rounded md:hidden"
         >
           <Menu className="w-5 h-5 text-slate-600" aria-hidden="true" />
@@ -88,6 +90,7 @@ export function DashboardMockup() {
 
       {/* Sidebar Navigation - Desktop only */}
       <nav 
+        id="dashboard-sidebar"
         aria-label="Navigation principale" 
         className="hidden md:flex absolute top-[70px] left-0 bottom-0 w-[70px] bg-[#F5F5F5] border-r border-slate-200"
       >
@@ -155,19 +158,17 @@ export function DashboardMockup() {
             </article>
           ))}
         </div>
-
-        {/* Floating Action Button - Responsive */}
-        <div className="flex justify-end mt-6 md:mt-8 pb-6 md:pb-8">
-          <button
-            type="button"
-            aria-label="Ajouter un événement"
-            onClick={() => setIsModalOpen(true)}
-            className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br from-pink-500 to-pink-600 shadow-lg flex items-center justify-center text-white hover:shadow-xl transition-shadow focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
-          >
-            <Plus className="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
-          </button>
-        </div>
       </main>
+
+      {/* Floating Action Button - Always visible, fixed position */}
+      <button
+        type="button"
+        aria-label="Ajouter un événement"
+        onClick={() => setIsModalOpen(true)}
+        className="fixed bottom-6 md:bottom-8 right-6 md:right-8 w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br from-pink-500 to-pink-600 shadow-lg flex items-center justify-center text-white hover:shadow-xl transition-shadow focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 z-40"
+      >
+        <Plus className="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
+      </button>
 
       {/* Modal - Responsive */}
       {isModalOpen && (
