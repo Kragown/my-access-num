@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:unit": "echo 'No unit tests configured yet'",
+    "test:api": "echo 'No API tests configured yet'"
   },
   "dependencies": {
     "lucide-react": "^0.555.0",
