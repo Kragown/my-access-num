@@ -2,6 +2,7 @@
 import { Home, Calendar, BarChart3, Settings, Search, Plus, X, Menu, ArrowLeft } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const events = [
   {
@@ -143,9 +144,11 @@ export function DashboardMockup() {
               className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden" 
               role="listitem"
             >
-              <img 
+              <Image 
                 src={event.image} 
                 alt={`Image pour ${event.title}`}
+                width={400}
+                height={192}
                 className="w-full h-40 md:h-48 object-cover"
               />
               <div className="p-4 md:p-5">
@@ -203,7 +206,7 @@ export function DashboardMockup() {
           <form className="space-y-3 md:space-y-4 mt-5 md:mt-0 mb-5 md:mb-6" aria-label="Formulaire d'ajout d'événement">
             <div>
               <label htmlFor="event-name-dashboard" className="block text-sm md:text-base font-medium text-slate-700 mb-1.5 md:mb-2">
-                Nom de l'évènement
+                Nom de l&apos;évènement
               </label>
               <input 
                 ref={firstInputRef}
@@ -216,7 +219,7 @@ export function DashboardMockup() {
             </div>
             <div>
               <label htmlFor="event-date-dashboard" className="block text-sm md:text-base font-medium text-slate-700 mb-1.5 md:mb-2">
-                Date de l'évènement
+                Date de l&apos;évènement
               </label>
               <input 
                 id="event-date-dashboard"

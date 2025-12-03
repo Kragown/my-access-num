@@ -2,6 +2,7 @@
 import { ChevronLeft, ChevronRight, Facebook, Twitter, Instagram, Linkedin, Menu } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const carouselItems = [
   {
@@ -63,36 +64,35 @@ export default function LandingPage() {
 
   useEffect(() => {
     if (carouselRef.current && window.innerWidth >= 768) {
+      const carouselElement = carouselRef.current;
       const handleTransitionEnd = () => {
-        if (carouselRef.current) {
+        if (carouselElement) {
           if (currentSlide >= carouselItems.length * 2) {
-            carouselRef.current.style.transition = 'none';
-            carouselRef.current.style.transform = `translateX(-${carouselItems.length * 25}%)`;
+            carouselElement.style.transition = 'none';
+            carouselElement.style.transform = `translateX(-${carouselItems.length * 25}%)`;
             setCurrentSlide(carouselItems.length);
             setTimeout(() => {
-              if (carouselRef.current) {
-                carouselRef.current.style.transition = 'transform 500ms ease-in-out';
+              if (carouselElement) {
+                carouselElement.style.transition = 'transform 500ms ease-in-out';
               }
             }, 50);
           }
           else if (currentSlide < carouselItems.length) {
-            carouselRef.current.style.transition = 'none';
-            carouselRef.current.style.transform = `translateX(-${(carouselItems.length * 2 - 1) * 25}%)`;
+            carouselElement.style.transition = 'none';
+            carouselElement.style.transform = `translateX(-${(carouselItems.length * 2 - 1) * 25}%)`;
             setCurrentSlide(carouselItems.length * 2 - 1);
             setTimeout(() => {
-              if (carouselRef.current) {
-                carouselRef.current.style.transition = 'transform 500ms ease-in-out';
+              if (carouselElement) {
+                carouselElement.style.transition = 'transform 500ms ease-in-out';
               }
             }, 50);
           }
         }
       };
 
-      carouselRef.current.addEventListener('transitionend', handleTransitionEnd);
+      carouselElement.addEventListener('transitionend', handleTransitionEnd);
       return () => {
-        if (carouselRef.current) {
-          carouselRef.current.removeEventListener('transitionend', handleTransitionEnd);
-        }
+        carouselElement.removeEventListener('transitionend', handleTransitionEnd);
       };
     }
   }, [currentSlide]);
@@ -219,9 +219,11 @@ export default function LandingPage() {
             {carouselItems.map((item) => (
               <article key={item.id} className="min-w-[280px] snap-center" role="listitem">
                 <div className="bg-white rounded-xl shadow-md overflow-hidden">
-                  <img 
+                  <Image 
                     src={item.image} 
                     alt={item.title}
+                    width={280}
+                    height={160}
                     className="w-full h-40 object-cover"
                   />
                   <div className="p-4">
@@ -263,9 +265,11 @@ export default function LandingPage() {
               {duplicatedItems.map((item, index) => (
                 <article key={`${item.id}-${index}`} className="min-w-[25%] px-3" role="listitem">
                   <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                    <img 
+                    <Image 
                       src={item.image} 
                       alt={item.title}
+                      width={400}
+                      height={192}
                       className="w-full h-48 object-cover"
                     />
                     <div className="p-5">
